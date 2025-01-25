@@ -1,0 +1,39 @@
+-use the feature based folder structure for the project.
+-use the tailwind css for styling.
+-create common components that will be reused in the project and put them in the components folder in the src folder.
+-for each feature we create query hooks in a hooks file in the related feature folder.
+
+=Focus on delivering the following features:
+-Article Search and Filtering:
+-Users should search articles by keyword.
+-Add filters for date, category, and source.
+
+=Personalized News Feed:
+-Allow users to customize their feed by selecting preferred sources, categories, and authors.
+
+=Mobile-Responsive Design:
+-Optimize the app for mobile devices.
+
+=Incorporate:
+-React with TypeScript.
+-Containerization with Docker.
+-Documentation for setup and use.
+-Best Practices: DRY, KISS, and SOLID principles.
+
+=Tech Stack
+-Frontend: React.js with TypeScript
+-State Management: Jotai.
+-Styling: Tailwind CSS.
+-Data Fetching: React Query from tanstack v5 for caching and managing API calls.
+-Testing: Jest and React Testing Library.
+-Containerization: Docker.
+
+=those are the sources that I will use:
+-NewsAPI: General news content.
+-New York Times: Focused, premium content.
+-The Guardian: High-quality journalism.
+
+=Dependencies
+-Axios (for HTTP requests).
+-Zod (for API response validation).
+-React Router (for navigation).
