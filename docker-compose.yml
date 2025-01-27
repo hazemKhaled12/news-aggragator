@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  react-app:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,5 +10,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    stdin_open: true
+    environment:
+      - NODE_ENV=development
+    stdin_open: true # for React DevTools
     tty: true
