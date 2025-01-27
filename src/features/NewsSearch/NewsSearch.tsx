@@ -1,16 +1,17 @@
 import React from 'react';
-import { useNewsFeeds } from './hooks/useNewsFeed';
+import { useNewsFeeds } from './hooks/useNewsSearch';
 import { useNewsFilters } from './hooks/useNewsFilters';
+import { NewsFilters } from './components/NewsFilters';
 import { Pagination } from '../../components/common/CPagination';
-import { EmptyView } from '../../components/common/CEmptyView/CEmptyView';
-
 import { NewsCardSkeletonGrid } from '../../components/blocks/NewsCardSkeleton';
 
 import { DEFAULT_PARAMS } from './constants';
 import { NewsList } from './components/NewsList';
+import { EmptyView } from '../../components/common/CEmptyView/CEmptyView';
 
-export const NewsFeed: React.FC = () => {
-  const { filters, currentPage, setCurrentPage } = useNewsFilters();
+export const NewsSearch: React.FC = () => {
+  const { filters, currentPage, setCurrentPage, updateFilters, resetFilters } =
+    useNewsFilters();
 
   const { articles, totalResults, isLoading, error } = useNewsFeeds(
     filters,
@@ -21,16 +22,24 @@ export const NewsFeed: React.FC = () => {
     <div className="container mx-auto px-4">
       {/* <div className="grid grid-cols-1 lg:grid-cols-4 gap-6"> */}
       {/* <div className="lg:col-span-3"> */}
+      <div className="mb-6">
+        <NewsFilters
+          filters={filters}
+          onFiltersChange={updateFilters}
+          onReset={resetFilters}
+        />
+      </div>
 
+      {!filters?.keyword && SearchFieldRequired()}
       {isLoading && <NewsCardSkeletonGrid />}
       {error && <div className="text-red-500 p-4">Error loading news</div>}
 
-      {!isLoading && !error && (
+      {!isLoading && !error && filters?.keyword && (
         <>
           {articles.length === 0 && (
             <EmptyView
               title="No articles found"
-              description="Try adjusting your Preferences"
+              description="Try adjusting your filters"
             />
           )}
 
@@ -44,5 +53,18 @@ export const NewsFeed: React.FC = () => {
         </>
       )}
     </div>
+    /* <div className="lg:col-span-1">
+          <UserPreferences />
+        </div> */
+    //   </div>
+    // </div>
   );
 };
+
+function SearchFieldRequired(): React.ReactNode {
+  return (
+    <div className="text-center text-gray-500 py-8">
+      Enter Keyworkd to start seeing data
+    </div>
+  );
+}

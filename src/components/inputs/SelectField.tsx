@@ -28,7 +28,7 @@ export const SelectField = ({
         </label>
       )}
       <select
-        className={`w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${className}`}
+        className={`w-full p-2 border border-gray-300 dark:border-gray-300 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${className}`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >

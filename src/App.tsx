@@ -1,5 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { NewsFeed } from './features/NewsFeed/NewsFeed';
+import { NewsSearch } from './features/NewsSearch';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { NewsFeed } from './features/NewsFeed';
+import { UserPreferences } from './features/UserPreferences/UserPreferences';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,10 +21,16 @@ function App() {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               News Aggregator
             </h1>
+            <UserPreferences />
           </div>
         </header>
         <main className="container mx-auto py-8">
-          <NewsFeed />
+          <Router>
+            <Routes>
+              <Route path="/" element={<NewsFeed />} />
+              <Route path="/search" element={<NewsSearch />} />
+            </Routes>
+          </Router>
         </main>
       </div>
     </QueryClientProvider>

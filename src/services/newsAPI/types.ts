@@ -21,19 +21,31 @@ export const NewsResponseSchema = z.object({
   articles: z.array(ArticleSchema),
 });
 
+// Top Headlines specific schema (same structure but documenting separately for clarity)
+export const NewsHeadlineResponseSchema = NewsResponseSchema;
+
 export type Article = z.infer<typeof ArticleSchema>;
 
 export interface NewsFilters {
   keyword?: string;
+  categories: string[];
+  sources: string[];
   startDate?: string;
   endDate?: string;
-  category?: string;
-  source?: string;
-  author?: string;
 }
 
 export interface NewsResponse {
   status: 'ok' | 'error';
   totalResults: number;
   articles: Article[];
+}
+
+export type NewsHeadlineResponse = NewsResponse;
+
+// Top Headlines specific filters
+export interface HeadlineFilters {
+  country?: string;
+  category?: string;
+  sources?: string;
+  q?: string;
 }

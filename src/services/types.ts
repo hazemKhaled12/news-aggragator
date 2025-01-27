@@ -19,7 +19,7 @@ export interface StandardArticle {
   author?: string | null;
   categories?: string[];
   publishedAt: string;
-  source: string;
+  source: 'The New York Times' | 'The Guardian' | 'NewsAPI';
 }
 
 // Zod schema for validation

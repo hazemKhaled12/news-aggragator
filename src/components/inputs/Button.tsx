@@ -1,9 +1,11 @@
 type ButtonVariant = 'solid' | 'outline' | 'ghost';
 type ButtonColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning';
+type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   color?: ButtonColor;
+  size?: ButtonSize;
   isLoading?: boolean;
   fullWidth?: boolean;
 }
@@ -12,6 +14,12 @@ const variantStyles: Record<ButtonVariant, string> = {
   solid: 'text-white',
   outline: 'bg-transparent border-2',
   ghost: 'bg-transparent hover:bg-opacity-10',
+};
+
+const sizeStyles: Record<ButtonSize, string> = {
+  sm: 'px-2 py-1 text-sm',
+  md: 'px-4 py-2',
+  lg: 'px-6 py-3 text-lg',
 };
 
 const colorStyles: Record<ButtonColor, Record<ButtonVariant, string>> = {
@@ -51,6 +59,7 @@ export const Button = ({
   children,
   variant = 'solid',
   color = 'primary',
+  size = 'md',
   isLoading = false,
   fullWidth = false,
   className = '',
@@ -60,7 +69,8 @@ export const Button = ({
   return (
     <button
       className={`
-        px-4 py-2 rounded font-medium transition-colors
+        rounded-lg font-medium transition-colors cursor-pointer
+        ${sizeStyles[size]}
         ${variantStyles[variant]}
         ${colorStyles[color][variant]}
         ${fullWidth ? 'w-full' : ''}
@@ -72,7 +82,11 @@ export const Button = ({
     >
       {isLoading ? (
         <div className="flex items-center justify-center">
-          <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          <div
+            className={`border-2 border-current border-t-transparent rounded-full animate-spin ${
+              size === 'sm' ? 'w-4 h-4' : size === 'lg' ? 'w-6 h-6' : 'w-5 h-5'
+            }`}
+          />
         </div>
       ) : (
         children

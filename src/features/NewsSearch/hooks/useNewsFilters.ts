@@ -1,17 +1,13 @@
 import { useState, useCallback } from 'react';
 import { NewsFilters } from '../../../services/newsAPI/types';
-import { useLocalState } from '../../../hooks/useLocalState';
 
-export const DEFAULT_FILTERS: NewsFilters = {
+const DEFAULT_FILTERS: NewsFilters = {
   categories: [],
   sources: [],
 };
 
 export const useNewsFilters = () => {
-  const [filters, setFilters] = useLocalState<NewsFilters>(
-    'user-preferences',
-    DEFAULT_FILTERS
-  );
+  const [filters, setFilters] = useState<NewsFilters>(DEFAULT_FILTERS);
   const [currentPage, setCurrentPage] = useState(1);
 
   const updateFilters = useCallback((newFilters: Partial<NewsFilters>) => {

@@ -1,5 +1,6 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
+//function to handle setting the initial state for the local storage
 const setInitialStateValue = <T>(key: string, initialValue: T) => {
   try {
     const item = window.localStorage.getItem(key);
@@ -10,7 +11,7 @@ const setInitialStateValue = <T>(key: string, initialValue: T) => {
   }
 };
 
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
+export const useLocalState = <T>(key: string, initialValue: T) => {
   // Initialize state with initial value or from localStorage
   const [state, setState] = useState<T>(
     setInitialStateValue(key, initialValue)

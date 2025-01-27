@@ -34,20 +34,20 @@ export const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className="flex justify-center space-x-2 mt-8">
       <button
-        className="px-3 py-1 rounded border disabled:opacity-50"
+        className="px-3 py-1 rounded  disabled:opacity-50 disabled:hover:bg-gray-500 bg-gray-500 hover:bg-gray-700 text-gray-100"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        Previous
+        {`< Previous`}
       </button>
 
       {getPageNumbers().map((page) => (
         <button
           key={page}
-          className={`px-3 py-1 rounded border ${
+          className={`px-3 py-1 rounded cursor-pointer text-gray-100 ${
             page === currentPage
-              ? 'bg-blue-500 text-white'
-              : 'hover:bg-gray-100'
+              ? 'bg-gray-700 '
+              : 'bg-gray-500 hover:bg-gray-700 '
           }`}
           onClick={() => onPageChange(page)}
         >
@@ -56,11 +56,11 @@ export const Pagination: React.FC<PaginationProps> = ({
       ))}
 
       <button
-        className="px-3 py-1 rounded border disabled:opacity-50"
+        className="px-3 py-1 rounded  disabled:opacity-50 disabled:hover:bg-gray-500 bg-gray-500 hover:bg-gray-700 text-gray text-gray-100 cursor-pointer"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        Next
+        {`Next >`}
       </button>
     </div>
   );
