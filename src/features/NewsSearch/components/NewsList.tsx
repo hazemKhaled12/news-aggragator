@@ -1,4 +1,4 @@
-import { StandardArticle } from '../services/types';
+import { StandardArticle } from '../../../services/types';
 import { NewsCard } from '../../../components/blocks/NewsCard';
 
 export const NewsList = ({ articles }: { articles: StandardArticle[] }) => {

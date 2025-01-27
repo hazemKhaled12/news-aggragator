@@ -1,10 +1,11 @@
 import { z } from 'zod';
+import { NEWS_SOURCES, CATEGORIES } from './constants';
 
 // Standardized filter interface used across all news services
 export interface StandardNewsFilters {
   keyword?: string;
-  category?: string;
-  source?: string;
+  categories: (typeof CATEGORIES)[number][];
+  sources: (typeof NEWS_SOURCES)[number][];
   startDate?: string;
   endDate?: string;
 }
@@ -19,7 +20,7 @@ export interface StandardArticle {
   author?: string | null;
   categories?: string[];
   publishedAt: string;
-  source: 'The New York Times' | 'The Guardian' | 'NewsAPI';
+  source: (typeof NEWS_SOURCES)[number];
 }
 
 // Zod schema for validation

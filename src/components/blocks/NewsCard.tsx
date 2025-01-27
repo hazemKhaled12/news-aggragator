@@ -1,5 +1,5 @@
 import React from 'react';
-import { StandardArticle } from '../services/types';
+import { StandardArticle } from '../../services/types';
 import newsPlaceholder from '@/assets/newsPlaceholder.jpg';
 
 interface NewsCardProps {
@@ -9,7 +9,7 @@ interface NewsCardProps {
 const CardHeader = ({ article }: { article: StandardArticle }) => {
   return (
     <div className="bg-gray-600 font-bold p-2 flex flex-col items-start text-sm gap-1">
-      <div className="whitespace-nowrap truncate text-xs text-gray-200 px-2 py-1 rounded-md bg-gray-700">
+      <div className="whitespace-nowrap truncate text-xs text-gray-200 px-2 py-1 rounded-md shadow-inner bg-gray-700 shadow-gray-800">
         <span title={`Source: ${article.source}`}>{article.source}</span>
       </div>
     </div>

@@ -3,6 +3,20 @@ import { NEWS_SOURCES } from '../constants';
 import { StandardNewsFilters } from '../types';
 import { NYTArticle } from './types';
 
+const mapCategoriesToNYT = (categories: string[]): string[] => {
+  const categoryMap: Record<string, string> = {
+    business: 'Business',
+    entertainment: 'Arts',
+    general: 'General',
+    health: 'Health',
+    science: 'Science',
+    sports: 'Sports',
+    technology: 'Technology',
+  };
+
+  return categories.map((category) => categoryMap[category] || category);
+};
+
 export const nytApiAdapter = (article: NYTArticle) => ({
   id: article._id,
   title: article.headline.main,
@@ -14,21 +28,24 @@ export const nytApiAdapter = (article: NYTArticle) => ({
   author: article.byline?.original || null,
   categories: [article.news_desk].filter(Boolean),
   publishedAt: article.pub_date,
-  source: NEWS_SOURCES.NYT,
+  source: NEWS_SOURCES[0],
 });
 
 export const nytApiFiltersAdapter = (
   filters: StandardNewsFilters,
   page: number
 ) => {
-  const { keyword, startDate, endDate, category } = filters;
+  const { keyword, startDate, endDate, categories } = filters;
+  const nytCategories = mapCategoriesToNYT(categories);
 
   return {
     'api-key': API_KEYS.NYT_API,
-    q: keyword || '',
-    fq: category ? `news_desk:(${category})` : undefined,
-    begin_date: startDate?.replace(/-/g, ''),
-    end_date: endDate?.replace(/-/g, ''),
-    page: page - 1, // NYT API is 0-based
+    ...(keyword && { q: keyword }),
+    ...(nytCategories.length > 0 && {
+      fq: `news_desk:(${nytCategories.join(' OR ')})`,
+    }),
+    ...(startDate && { begin_date: startDate.replace(/-/g, '') }),
+    ...(endDate && { end_date: endDate.replace(/-/g, '') }),
+    page: page - 1,
   };
 };

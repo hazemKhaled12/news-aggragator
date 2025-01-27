@@ -1,4 +1,4 @@
-import { DEFAULT_PARAMS } from '../constants';
+import { DEFAULT_PARAMS, NEWS_SOURCES } from '../constants';
 import { StandardArticle, StandardNewsFilters } from '../types';
 import { NewsResponse, HeadlineFilters } from './types';
 
@@ -15,7 +15,7 @@ export const newsApiAdapter = (
     author: article.author,
     categories: article.source.name ? [article.source.name] : [],
     publishedAt: article.publishedAt,
-    source: 'NewsAPI',
+    source: NEWS_SOURCES[2],
   };
 };
 
@@ -23,7 +23,7 @@ export const newsApiFiltersAdapter = (
   filters: StandardNewsFilters,
   page: number
 ) => {
-  const { keyword, startDate, endDate, category } = filters;
+  const { keyword, startDate, endDate, categories } = filters;
 
   const params: Record<string, string | number> = {
     page,
@@ -32,7 +32,7 @@ export const newsApiFiltersAdapter = (
   };
 
   if (keyword) params.q = keyword;
-  if (category) params.category = category;
+  if (categories.length > 0) params.category = categories[0];
   if (startDate) params.from = startDate;
   if (endDate) params.to = endDate;
 
@@ -43,7 +43,7 @@ export const newsApiHeadlinesFiltersAdapter = (
   filters: StandardNewsFilters,
   page: number
 ): HeadlineFilters & { page: number; pageSize: number } => {
-  const { keyword, category } = filters;
+  const { keyword, categories } = filters;
 
   const params: HeadlineFilters & { page: number; pageSize: number } = {
     page,
@@ -54,7 +54,7 @@ export const newsApiHeadlinesFiltersAdapter = (
   params.country = 'us';
 
   if (keyword) params.q = keyword;
-  if (category) params.category = category.toLowerCase();
+  if (categories.length > 0) params.category = categories[0];
 
   return params;
 };

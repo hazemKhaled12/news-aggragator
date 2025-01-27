@@ -1,13 +1,15 @@
 version: '3.8'
-
 services:
-  news-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # Development service
+  dev:
+    build: .
     ports:
-      - '80:80'
+      - '5173:5173'
+    volumes:
+      - .:/app
+      - /app/node_modules
     environment:
-      - VITE_NEWS_API_KEY=${VITE_NEWS_API_KEY}
-      - VITE_NYT_API_KEY=${VITE_NYT_API_KEY}
-      - VITE_GUARDIAN_API_KEY=${VITE_GUARDIAN_API_KEY}
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+      # - VITE_SERVER_HOST=0.0.0.0
+    command: pnpm dev --host

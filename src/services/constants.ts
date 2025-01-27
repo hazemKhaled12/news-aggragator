@@ -3,8 +3,18 @@ export const DEFAULT_PARAMS = {
   pageSize: 10,
 };
 
-export const NEWS_SOURCES = {
-  NYT: 'The New York Times',
-  GUARDIAN: 'The Guardian',
-  NEWS_API: 'News API',
-} as const;
+export const NEWS_SOURCES = [
+  'The New York Times',
+  'The Guardian',
+  'News API',
+] as const;
+
+export const CATEGORIES = [
+  'business',
+  'entertainment',
+  'general',
+  'health',
+  'science',
+  'sports',
+  'technology',
+] as const;

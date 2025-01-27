@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from '../../config/api';
 import { StandardNewsFilters, StandardNewsResponse } from '../types';
 import { NYTResponse } from './types';
 import { DEFAULT_PARAMS, NEWS_SOURCES } from '../constants';
-import { handleAPIError } from './api-error';
+import { handleAPIError } from '../api-error';
 import { nytApiAdapter, nytApiFiltersAdapter } from './adapters';
 
 const nytApiClient = axios.create({
@@ -29,6 +29,6 @@ export const fetchNYTArticles = async (
       currentPage: page,
     };
   } catch (error) {
-    throw handleAPIError(error, NEWS_SOURCES.NYT);
+    throw handleAPIError(error, NEWS_SOURCES[0]);
   }
 };

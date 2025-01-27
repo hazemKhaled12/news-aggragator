@@ -5,7 +5,7 @@ import { NewsFilters } from './components/NewsFilters';
 import { Pagination } from '../../components/common/CPagination';
 import { NewsCardSkeletonGrid } from '../../components/blocks/NewsCardSkeleton';
 
-import { DEFAULT_PARAMS } from './constants';
+import { DEFAULT_PARAMS } from '../../services/constants';
 import { NewsList } from './components/NewsList';
 import { EmptyView } from '../../components/common/CEmptyView/CEmptyView';
 
@@ -20,8 +20,6 @@ export const NewsSearch: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4">
-      {/* <div className="grid grid-cols-1 lg:grid-cols-4 gap-6"> */}
-      {/* <div className="lg:col-span-3"> */}
       <div className="mb-6">
         <NewsFilters
           filters={filters}
@@ -53,11 +51,6 @@ export const NewsSearch: React.FC = () => {
         </>
       )}
     </div>
-    /* <div className="lg:col-span-1">
-          <UserPreferences />
-        </div> */
-    //   </div>
-    // </div>
   );
 };
 

@@ -38,7 +38,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        {`< Previous`}
+        {`< Prev`}
       </button>
 
       {getPageNumbers().map((page) => (

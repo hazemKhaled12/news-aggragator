@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { NewsFilters as NewsFiltersType } from '../../../services/newsAPI/types';
-import { CATEGORIES, SOURCES } from '../constants';
+import { CATEGORIES, NEWS_SOURCES } from '../../../services/constants';
 import {
   TextField,
   DatePicker,
@@ -8,10 +8,11 @@ import {
   MultiSelect,
 } from '../../../components/inputs';
 import { useDebounce } from '../../../hooks/useDebounce';
+import { StandardNewsFilters } from 'services/types';
 
 interface NewsFiltersProps {
-  filters: NewsFiltersType;
-  onFiltersChange: (filters: Partial<NewsFiltersType>) => void;
+  filters: StandardNewsFilters;
+  onFiltersChange: (filters: Partial<StandardNewsFilters>) => void;
   onReset?: () => void;
 }
 
@@ -37,7 +38,7 @@ export const NewsFilters = ({
   }, [debouncedSearchTerm, onFiltersChange]);
 
   const handleFilterChange = (
-    key: keyof NewsFiltersType,
+    key: keyof StandardNewsFilters,
     value: string | string[]
   ) => {
     if (key === 'keyword') {
@@ -75,7 +76,7 @@ export const NewsFilters = ({
           label="Sources"
           value={filters.sources || []}
           onChange={(value: string[]) => handleFilterChange('sources', value)}
-          options={SOURCES.map((source) => ({
+          options={NEWS_SOURCES.map((source) => ({
             value: source,
             label: source,
           }))}

@@ -1,60 +1,43 @@
+import React from 'react';
+import { CalendarIcon } from '@heroicons/react/20/solid';
+
 interface DatePickerProps {
   value: string;
   onChange: (value: string) => void;
+  min?: string | undefined;
+  max?: string | undefined;
   title?: string;
-  className?: string;
-  min?: string;
-  max?: string;
+  placeholder?: string;
 }
 
-export const DatePicker = ({
+export const DatePicker: React.FC<DatePickerProps> = ({
   value,
   onChange,
-  title,
-  className = '',
   min,
   max,
-}: DatePickerProps) => {
+  title,
+  placeholder = 'Select date...',
+}) => {
   return (
-    <div className="flex flex-col">
+    <div className="w-full">
       {title && (
-        <label className="flex justify-start text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {title}
         </label>
       )}
-      <div className="flex items-center gap-2">
+      <div className="relative">
         <input
           type="date"
-          className={`w-full p-2 border border-gray-300 dark:border-gray-300 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${className}`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           min={min}
           max={max}
+          className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-4 text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder={placeholder}
         />
-        {value && (
-          <button
-            title="Clear date"
-            onClick={() => onChange('')}
-            className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded"
-            type="button"
-            aria-label="Clear date"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        )}
+        {/* <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+          <CalendarIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+        </div> */}
       </div>
     </div>
   );

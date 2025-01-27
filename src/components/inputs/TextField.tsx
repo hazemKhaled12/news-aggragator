@@ -1,32 +1,34 @@
+import React from 'react';
+
 interface TextFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  className?: string;
   title?: string;
 }
 
-export const TextField = ({
+export const TextField: React.FC<TextFieldProps> = ({
   value,
   onChange,
   placeholder,
-  className = '',
   title,
-}: TextFieldProps) => {
+}) => {
   return (
-    <div className="flex flex-col">
+    <div className="w-full">
       {title && (
-        <label className="flex justify-start text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           {title}
         </label>
       )}
-      <input
-        type="text"
-        className={`w-full p-2 border border-gray-300 dark:border-gray-300 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${className}`}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-      />
+      <div className="relative">
+        <input
+          type="text"
+          className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-3 text-left focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+        />
+      </div>
     </div>
   );
 };

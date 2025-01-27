@@ -17,19 +17,38 @@ export const useLocalState = <T>(key: string, initialValue: T) => {
     setInitialStateValue(key, initialValue)
   );
 
-  // Sync state with localStorage
+  // Sync state with localStorage and handle custom events
   useEffect(() => {
-    const handler = (e: StorageEvent) => {
+    const storageHandler = (e: StorageEvent) => {
       if (e.key === key) {
         setState(JSON.parse(e.newValue ?? ''));
       }
     };
 
-    window.addEventListener('storage', handler);
-    return () => window.removeEventListener('storage', handler);
+    const customEventHandler = (e: CustomEvent) => {
+      if (e.detail.key === key) {
+        setState(e.detail.value);
+      }
+    };
+
+    // Listen for storage events (other tabs/windows)
+    window.addEventListener('storage', storageHandler);
+    // Listen for custom events (same window)
+    window.addEventListener(
+      `localState-${key}`,
+      customEventHandler as EventListener
+    );
+
+    return () => {
+      window.removeEventListener('storage', storageHandler);
+      window.removeEventListener(
+        `localState-${key}`,
+        customEventHandler as EventListener
+      );
+    };
   }, [key]);
 
-  // state setter that syncs with localStorage
+  // state setter that syncs with localStorage and dispatches custom event
   const onSetState: Dispatch<SetStateAction<T>> = (newStateOrFn) => {
     setState((prevState) => {
       const newState =
@@ -38,6 +57,14 @@ export const useLocalState = <T>(key: string, initialValue: T) => {
           : newStateOrFn;
 
       localStorage.setItem(key, JSON.stringify(newState));
+
+      // Dispatch custom event for same-window updates
+      window.dispatchEvent(
+        new CustomEvent(`localState-${key}`, {
+          detail: { key, value: newState },
+        })
+      );
+
       return newState;
     });
   };
